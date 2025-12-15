@@ -1,0 +1,63 @@
+# Cursor Rules for DuraGas
+
+## Project Type
+Home Assistant Custom Integration (Python 3.12+)
+
+## Code Style
+
+### Always Include
+- Full type hints on all functions
+- Async/await for I/O operations
+- Docstrings on public methods
+- Error handling with specific exceptions
+
+### Pattern: Entity Descriptions
+```python
+@dataclass(frozen=True, kw_only=True)
+class DuraGasSensorEntityDescription(SensorEntityDescription):
+    value_fn: Callable[[dict[str, Any]], Any]
+    extra_attrs_fn: Callable[[dict[str, Any]], dict[str, Any]] | None = None
+    condition_fn: Callable[[dict[str, Any]], bool] | None = None
+```
+
+### Pattern: Coordinator Entity
+```python
+class DuraGasSensor(CoordinatorEntity[DuraGasDataUpdateCoordinator], SensorEntity):
+    _attr_has_entity_name = True
+
+    @property
+    def native_value(self) -> Any:
+        return self.entity_description.value_fn(self.coordinator.data)
+```
+
+### Pattern: Service Handler
+```python
+async def handle_service(call: ServiceCall) -> None:
+    coordinator = hass.data[DOMAIN][entry_id]
+    await coordinator.async_method(call.data["param"])
+```
+
+## Key Constants
+```python
+LP_GAS_KG_TO_LITERS = 1.96
+WATER_HEATING_BASE_PERCENTAGE = 40
+SCAN_INTERVAL = 300
+```
+
+## File Structure
+- coordinator.py: All calculations and state
+- sensor.py: Entity definitions only
+- config_flow.py: Configuration UI
+- const.py: Constants and enums
+
+## Mexican Context
+- Tank sizes: 120L, 180L, 300L, 500L, 1000L
+- Prices: 8-20 MXN/L
+- Spanish: Use "tú" form, "tanque", "recarga"
+
+## Imports
+```python
+from homeassistant.components.sensor import SensorEntity, SensorStateClass
+from homeassistant.helpers.update_coordinator import CoordinatorEntity
+from homeassistant.config_entries import ConfigEntry
+```

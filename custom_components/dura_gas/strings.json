@@ -1,0 +1,249 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Tank Configuration",
+        "description": "Configure your LP gas tank. Most Mexican homes use 120L or 180L tanks.",
+        "data": {
+          "tank_size": "Tank Size",
+          "tank_capacity_custom": "Custom Capacity (liters)",
+          "usable_percentage": "Usable Percentage (%)",
+          "initial_level": "Initial Level (%)",
+          "price_per_liter": "Price per Liter (MXN)"
+        },
+        "data_description": {
+          "tank_size": "Select your tank size. Choose 'Custom' for non-standard sizes.",
+          "tank_capacity_custom": "Only required if you selected 'Custom' tank size.",
+          "usable_percentage": "Maximum safe fill level (80% recommended for safety).",
+          "initial_level": "Current tank level if known, otherwise leave at 0.",
+          "price_per_liter": "Current price per liter of LP gas in MXN."
+        }
+      },
+      "solar": {
+        "title": "Solar Water Heater",
+        "description": "Configure your solar water heater to track savings and ROI.",
+        "data": {
+          "has_solar": "I have a solar water heater",
+          "solar_installation_date": "Installation Date",
+          "solar_investment": "Total Investment (MXN)",
+          "solar_efficiency": "Efficiency (%)"
+        },
+        "data_description": {
+          "has_solar": "Enable solar water heater tracking.",
+          "solar_installation_date": "When was your solar heater installed?",
+          "solar_investment": "Total cost including installation.",
+          "solar_efficiency": "Estimated efficiency of your solar heater (70% typical)."
+        }
+      },
+      "alerts": {
+        "title": "Alerts & Strategy",
+        "description": "Configure alerts and refill strategy.",
+        "data": {
+          "low_threshold": "Low Level Alert (%)",
+          "refill_threshold": "Refill Recommended Alert (%)",
+          "refill_strategy": "Refill Strategy"
+        },
+        "data_description": {
+          "low_threshold": "Alert when tank falls below this level.",
+          "refill_threshold": "Recommend refill when tank falls below this level.",
+          "refill_strategy": "How you prefer to refill your tank."
+        }
+      }
+    },
+    "error": {
+      "invalid_capacity": "Tank capacity must be between 50 and 5000 liters.",
+      "invalid_thresholds": "Refill threshold must be greater than or equal to low level threshold."
+    },
+    "abort": {
+      "already_configured": "DuraGas is already configured."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Tank Configuration",
+        "description": "Update your LP gas tank settings.",
+        "data": {
+          "tank_size": "Tank Size",
+          "tank_capacity_custom": "Custom Capacity (liters)",
+          "usable_percentage": "Usable Percentage (%)",
+          "price_per_liter": "Price per Liter (MXN)"
+        }
+      },
+      "solar": {
+        "title": "Solar Water Heater",
+        "description": "Update your solar water heater settings.",
+        "data": {
+          "has_solar": "I have a solar water heater",
+          "solar_installation_date": "Installation Date",
+          "solar_investment": "Total Investment (MXN)",
+          "solar_efficiency": "Efficiency (%)"
+        }
+      },
+      "alerts": {
+        "title": "Alerts & Strategy",
+        "description": "Update alerts and refill strategy.",
+        "data": {
+          "low_threshold": "Low Level Alert (%)",
+          "refill_threshold": "Refill Recommended Alert (%)",
+          "refill_strategy": "Refill Strategy"
+        }
+      }
+    },
+    "error": {
+      "invalid_capacity": "Tank capacity must be between 50 and 5000 liters.",
+      "invalid_thresholds": "Refill threshold must be greater than or equal to low level threshold."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "tank_level": {
+        "name": "Tank Level"
+      },
+      "tank_liters": {
+        "name": "Tank Liters"
+      },
+      "tank_kilograms": {
+        "name": "Tank Kilograms"
+      },
+      "tank_value": {
+        "name": "Tank Value"
+      },
+      "daily_consumption": {
+        "name": "Daily Consumption"
+      },
+      "monthly_consumption": {
+        "name": "Monthly Consumption"
+      },
+      "days_since_refill": {
+        "name": "Days Since Refill"
+      },
+      "liters_consumed": {
+        "name": "Liters Consumed"
+      },
+      "days_remaining": {
+        "name": "Days Remaining"
+      },
+      "weeks_remaining": {
+        "name": "Weeks Remaining"
+      },
+      "next_refill_date": {
+        "name": "Next Refill Date"
+      },
+      "recommended_liters": {
+        "name": "Recommended Liters"
+      },
+      "recommended_cost": {
+        "name": "Recommended Cost"
+      },
+      "resulting_level": {
+        "name": "Resulting Level"
+      },
+      "last_refill_date": {
+        "name": "Last Refill Date"
+      },
+      "last_refill_liters": {
+        "name": "Last Refill Liters"
+      },
+      "last_refill_cost": {
+        "name": "Last Refill Cost"
+      },
+      "monthly_cost": {
+        "name": "Monthly Cost"
+      },
+      "refills_per_month": {
+        "name": "Refills Per Month"
+      },
+      "vs_cylinders": {
+        "name": "Savings vs Cylinders"
+      },
+      "solar_efficiency_real": {
+        "name": "Solar Efficiency"
+      },
+      "solar_savings_monthly": {
+        "name": "Solar Savings Monthly"
+      },
+      "solar_roi_accumulated": {
+        "name": "Solar ROI Accumulated"
+      },
+      "hot_water_consumption": {
+        "name": "Hot Water Consumption"
+      }
+    },
+    "binary_sensor": {
+      "low_level": {
+        "name": "Low Level"
+      },
+      "refill_recommended": {
+        "name": "Refill Recommended"
+      },
+      "solar_active": {
+        "name": "Solar Active"
+      }
+    }
+  },
+  "services": {
+    "record_refill": {
+      "name": "Record Refill",
+      "description": "Record a new gas refill with the amount and price.",
+      "fields": {
+        "liters": {
+          "name": "Liters",
+          "description": "Amount of gas added in liters."
+        },
+        "price_per_liter": {
+          "name": "Price per Liter",
+          "description": "Price paid per liter in MXN."
+        },
+        "refill_date": {
+          "name": "Refill Date",
+          "description": "Date and time of refill (optional, defaults to now)."
+        }
+      }
+    },
+    "update_level": {
+      "name": "Update Level",
+      "description": "Manually update the current tank level percentage.",
+      "fields": {
+        "level_percent": {
+          "name": "Level Percentage",
+          "description": "Current tank level in percentage."
+        }
+      }
+    },
+    "update_price": {
+      "name": "Update Price",
+      "description": "Update the current gas price per liter.",
+      "fields": {
+        "price_per_liter": {
+          "name": "Price per Liter",
+          "description": "New price per liter in MXN."
+        }
+      }
+    },
+    "set_heating_mode": {
+      "name": "Set Heating Mode",
+      "description": "Change the water heating mode (solar/gas/hybrid).",
+      "fields": {
+        "mode": {
+          "name": "Heating Mode",
+          "description": "Water heating mode to set."
+        }
+      }
+    },
+    "set_strategy": {
+      "name": "Set Strategy",
+      "description": "Change the refill recommendation strategy.",
+      "fields": {
+        "strategy": {
+          "name": "Strategy",
+          "description": "Refill strategy to use."
+        },
+        "custom_amount": {
+          "name": "Custom Amount",
+          "description": "Custom amount in MXN (only for custom strategy)."
+        }
+      }
+    }
+  }
+}

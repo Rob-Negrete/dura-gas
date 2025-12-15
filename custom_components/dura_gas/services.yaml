@@ -1,0 +1,127 @@
+record_refill:
+  name: Record Gas Refill
+  description: Record a new gas refill with liters and price
+  fields:
+    liters:
+      name: Liters
+      description: Amount of gas added in liters
+      required: true
+      example: 96
+      selector:
+        number:
+          min: 0
+          max: 200
+          step: 0.1
+          unit_of_measurement: "L"
+    price_per_liter:
+      name: Price per Liter
+      description: Price paid per liter in MXN
+      required: true
+      example: 10.88
+      selector:
+        number:
+          min: 8
+          max: 20
+          step: 0.01
+          unit_of_measurement: "MXN/L"
+    refill_date:
+      name: Refill Date
+      description: Date and time of refill (optional, defaults to now)
+      required: false
+      selector:
+        datetime:
+
+update_level:
+  name: Update Tank Level
+  description: Manually update the current tank level percentage
+  fields:
+    level_percent:
+      name: Level Percentage
+      description: Current tank level in percentage
+      required: true
+      example: 75
+      selector:
+        number:
+          min: 0
+          max: 100
+          step: 1
+          unit_of_measurement: "%"
+
+update_price:
+  name: Update Gas Price
+  description: Update the current gas price per liter
+  fields:
+    price_per_liter:
+      name: Price per Liter
+      description: New price per liter in MXN
+      required: true
+      example: 10.88
+      selector:
+        number:
+          min: 8
+          max: 20
+          step: 0.01
+          unit_of_measurement: "MXN/L"
+
+set_heating_mode:
+  name: Set Water Heating Mode
+  description: Change the water heating mode (solar/gas/hybrid)
+  fields:
+    mode:
+      name: Heating Mode
+      description: Water heating mode
+      required: true
+      example: "solar_gas_hybrid"
+      selector:
+        select:
+          options:
+            - label: "Solar + Gas (Hybrid)"
+              value: "solar_gas_hybrid"
+            - label: "Solar Only"
+              value: "solar_only"
+            - label: "Gas Only"
+              value: "gas_only"
+            - label: "None"
+              value: "none"
+
+set_strategy:
+  name: Set Refill Strategy
+  description: Change the refill recommendation strategy
+  fields:
+    strategy:
+      name: Strategy
+      description: Refill strategy
+      required: true
+      example: "fill_complete"
+      selector:
+        select:
+          options:
+            - label: "Fill Complete (80%)"
+              value: "fill_complete"
+            - label: "Fixed: $300 MXN"
+              value: "fixed_300"
+            - label: "Fixed: $400 MXN"
+              value: "fixed_400"
+            - label: "Fixed: $500 MXN"
+              value: "fixed_500"
+            - label: "Fixed: $600 MXN"
+              value: "fixed_600"
+            - label: "Fill to 50%"
+              value: "level_50"
+            - label: "Fill to 60%"
+              value: "level_60"
+            - label: "Fill to 70%"
+              value: "level_70"
+            - label: "Custom Amount"
+              value: "custom"
+    custom_amount:
+      name: Custom Amount
+      description: Custom amount in MXN (only for custom strategy)
+      required: false
+      example: 450
+      selector:
+        number:
+          min: 100
+          max: 2000
+          step: 10
+          unit_of_measurement: "MXN"

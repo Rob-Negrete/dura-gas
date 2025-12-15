@@ -1,0 +1,249 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Configuración del Tanque",
+        "description": "Configura tu tanque de gas LP. La mayoría de hogares mexicanos usan tanques de 120L o 180L.",
+        "data": {
+          "tank_size": "Tamaño del Tanque",
+          "tank_capacity_custom": "Capacidad Personalizada (litros)",
+          "usable_percentage": "Porcentaje Utilizable (%)",
+          "initial_level": "Nivel Inicial (%)",
+          "price_per_liter": "Precio por Litro (MXN)"
+        },
+        "data_description": {
+          "tank_size": "Selecciona el tamaño de tu tanque. Elige 'Personalizado' para tamaños especiales.",
+          "tank_capacity_custom": "Solo requerido si seleccionaste 'Personalizado'.",
+          "usable_percentage": "Nivel máximo de llenado seguro (80% recomendado por seguridad).",
+          "initial_level": "Nivel actual del tanque si lo conoces, de lo contrario deja en 0.",
+          "price_per_liter": "Precio actual por litro de gas LP en MXN."
+        }
+      },
+      "solar": {
+        "title": "Calentador Solar de Agua",
+        "description": "Configura tu calentador solar para dar seguimiento al ahorro y retorno de inversión.",
+        "data": {
+          "has_solar": "Tengo un calentador solar de agua",
+          "solar_installation_date": "Fecha de Instalación",
+          "solar_investment": "Inversión Total (MXN)",
+          "solar_efficiency": "Eficiencia (%)"
+        },
+        "data_description": {
+          "has_solar": "Activa el seguimiento del calentador solar.",
+          "solar_installation_date": "¿Cuándo se instaló tu calentador solar?",
+          "solar_investment": "Costo total incluyendo instalación.",
+          "solar_efficiency": "Eficiencia estimada de tu calentador solar (70% es típico)."
+        }
+      },
+      "alerts": {
+        "title": "Alertas y Estrategia",
+        "description": "Configura alertas y estrategia de recarga.",
+        "data": {
+          "low_threshold": "Alerta de Nivel Bajo (%)",
+          "refill_threshold": "Alerta de Recarga Recomendada (%)",
+          "refill_strategy": "Estrategia de Recarga"
+        },
+        "data_description": {
+          "low_threshold": "Alertar cuando el tanque caiga por debajo de este nivel.",
+          "refill_threshold": "Recomendar recarga cuando el tanque caiga por debajo de este nivel.",
+          "refill_strategy": "Cómo prefieres recargar tu tanque."
+        }
+      }
+    },
+    "error": {
+      "invalid_capacity": "La capacidad del tanque debe estar entre 50 y 5000 litros.",
+      "invalid_thresholds": "El umbral de recarga debe ser mayor o igual al umbral de nivel bajo."
+    },
+    "abort": {
+      "already_configured": "DuraGas ya está configurado."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Configuración del Tanque",
+        "description": "Actualiza la configuración de tu tanque de gas LP.",
+        "data": {
+          "tank_size": "Tamaño del Tanque",
+          "tank_capacity_custom": "Capacidad Personalizada (litros)",
+          "usable_percentage": "Porcentaje Utilizable (%)",
+          "price_per_liter": "Precio por Litro (MXN)"
+        }
+      },
+      "solar": {
+        "title": "Calentador Solar de Agua",
+        "description": "Actualiza la configuración de tu calentador solar.",
+        "data": {
+          "has_solar": "Tengo un calentador solar de agua",
+          "solar_installation_date": "Fecha de Instalación",
+          "solar_investment": "Inversión Total (MXN)",
+          "solar_efficiency": "Eficiencia (%)"
+        }
+      },
+      "alerts": {
+        "title": "Alertas y Estrategia",
+        "description": "Actualiza alertas y estrategia de recarga.",
+        "data": {
+          "low_threshold": "Alerta de Nivel Bajo (%)",
+          "refill_threshold": "Alerta de Recarga Recomendada (%)",
+          "refill_strategy": "Estrategia de Recarga"
+        }
+      }
+    },
+    "error": {
+      "invalid_capacity": "La capacidad del tanque debe estar entre 50 y 5000 litros.",
+      "invalid_thresholds": "El umbral de recarga debe ser mayor o igual al umbral de nivel bajo."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "tank_level": {
+        "name": "Nivel del Tanque"
+      },
+      "tank_liters": {
+        "name": "Litros en Tanque"
+      },
+      "tank_kilograms": {
+        "name": "Kilogramos en Tanque"
+      },
+      "tank_value": {
+        "name": "Valor del Tanque"
+      },
+      "daily_consumption": {
+        "name": "Consumo Diario"
+      },
+      "monthly_consumption": {
+        "name": "Consumo Mensual"
+      },
+      "days_since_refill": {
+        "name": "Días Desde Recarga"
+      },
+      "liters_consumed": {
+        "name": "Litros Consumidos"
+      },
+      "days_remaining": {
+        "name": "Días Restantes"
+      },
+      "weeks_remaining": {
+        "name": "Semanas Restantes"
+      },
+      "next_refill_date": {
+        "name": "Fecha Próxima Recarga"
+      },
+      "recommended_liters": {
+        "name": "Litros Recomendados"
+      },
+      "recommended_cost": {
+        "name": "Costo Recomendado"
+      },
+      "resulting_level": {
+        "name": "Nivel Resultante"
+      },
+      "last_refill_date": {
+        "name": "Fecha Última Recarga"
+      },
+      "last_refill_liters": {
+        "name": "Litros Última Recarga"
+      },
+      "last_refill_cost": {
+        "name": "Costo Última Recarga"
+      },
+      "monthly_cost": {
+        "name": "Costo Mensual"
+      },
+      "refills_per_month": {
+        "name": "Recargas por Mes"
+      },
+      "vs_cylinders": {
+        "name": "Ahorro vs Cilindros"
+      },
+      "solar_efficiency_real": {
+        "name": "Eficiencia Solar"
+      },
+      "solar_savings_monthly": {
+        "name": "Ahorro Solar Mensual"
+      },
+      "solar_roi_accumulated": {
+        "name": "ROI Solar Acumulado"
+      },
+      "hot_water_consumption": {
+        "name": "Consumo Agua Caliente"
+      }
+    },
+    "binary_sensor": {
+      "low_level": {
+        "name": "Nivel Bajo"
+      },
+      "refill_recommended": {
+        "name": "Recarga Recomendada"
+      },
+      "solar_active": {
+        "name": "Solar Activo"
+      }
+    }
+  },
+  "services": {
+    "record_refill": {
+      "name": "Registrar Recarga",
+      "description": "Registra una nueva recarga de gas con la cantidad y precio.",
+      "fields": {
+        "liters": {
+          "name": "Litros",
+          "description": "Cantidad de gas agregado en litros."
+        },
+        "price_per_liter": {
+          "name": "Precio por Litro",
+          "description": "Precio pagado por litro en MXN."
+        },
+        "refill_date": {
+          "name": "Fecha de Recarga",
+          "description": "Fecha y hora de la recarga (opcional, por defecto ahora)."
+        }
+      }
+    },
+    "update_level": {
+      "name": "Actualizar Nivel",
+      "description": "Actualiza manualmente el porcentaje actual del tanque.",
+      "fields": {
+        "level_percent": {
+          "name": "Porcentaje de Nivel",
+          "description": "Nivel actual del tanque en porcentaje."
+        }
+      }
+    },
+    "update_price": {
+      "name": "Actualizar Precio",
+      "description": "Actualiza el precio actual del gas por litro.",
+      "fields": {
+        "price_per_liter": {
+          "name": "Precio por Litro",
+          "description": "Nuevo precio por litro en MXN."
+        }
+      }
+    },
+    "set_heating_mode": {
+      "name": "Establecer Modo de Calentamiento",
+      "description": "Cambia el modo de calentamiento de agua (solar/gas/híbrido).",
+      "fields": {
+        "mode": {
+          "name": "Modo de Calentamiento",
+          "description": "Modo de calentamiento de agua a establecer."
+        }
+      }
+    },
+    "set_strategy": {
+      "name": "Establecer Estrategia",
+      "description": "Cambia la estrategia de recomendación de recarga.",
+      "fields": {
+        "strategy": {
+          "name": "Estrategia",
+          "description": "Estrategia de recarga a usar."
+        },
+        "custom_amount": {
+          "name": "Monto Personalizado",
+          "description": "Monto personalizado en MXN (solo para estrategia personalizada)."
+        }
+      }
+    }
+  }
+}

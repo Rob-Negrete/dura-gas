@@ -1,0 +1,14 @@
+{
+  "domain": "dura_gas",
+  "name": "DuraGas",
+  "codeowners": ["@Rob-Negrete"],
+  "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://github.com/Rob-Negrete/ha-dura-gas",
+  "integration_type": "device",
+  "iot_class": "calculated",
+  "issue_tracker": "https://github.com/Rob-Negrete/ha-dura-gas/issues",
+  "requirements": [],
+  "version": "1.0.0",
+  "homeassistant": "2025.10.0"
+}
