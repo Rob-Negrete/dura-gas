@@ -3,6 +3,7 @@ from __future__ import annotations
 
 from collections.abc import Callable
 from dataclasses import dataclass
+from datetime import datetime
 from typing import Any
 
 from homeassistant.components.sensor import (
@@ -17,9 +18,26 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
+from homeassistant.util import dt as dt_util
 
 from .const import DOMAIN, VERSION
 from .coordinator import DuraGasDataUpdateCoordinator
+
+
+def _parse_datetime(value: str | datetime | None) -> datetime | None:
+    """Parse a datetime value from string or return as-is if already datetime."""
+    if value is None:
+        return None
+    if isinstance(value, datetime):
+        return value
+    try:
+        parsed = datetime.fromisoformat(value)
+        # Ensure timezone awareness
+        if parsed.tzinfo is None:
+            parsed = dt_util.as_local(parsed)
+        return parsed
+    except (ValueError, TypeError):
+        return None
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -129,7 +147,7 @@ SENSOR_DESCRIPTIONS: tuple[DuraGasSensorEntityDescription, ...] = (
         translation_key="next_refill_date",
         device_class=SensorDeviceClass.TIMESTAMP,
         icon="mdi:calendar-alert",
-        value_fn=lambda data: data.get("projection", {}).get("next_refill_date"),
+        value_fn=lambda data: _parse_datetime(data.get("projection", {}).get("next_refill_date")),
     ),
     DuraGasSensorEntityDescription(
         key="recommended_liters",
@@ -162,7 +180,7 @@ SENSOR_DESCRIPTIONS: tuple[DuraGasSensorEntityDescription, ...] = (
         translation_key="last_refill_date",
         device_class=SensorDeviceClass.TIMESTAMP,
         icon="mdi:calendar-check",
-        value_fn=lambda data: data.get("last_refill", {}).get("date"),
+        value_fn=lambda data: _parse_datetime(data.get("last_refill", {}).get("date")),
     ),
     DuraGasSensorEntityDescription(
         key="last_refill_liters",

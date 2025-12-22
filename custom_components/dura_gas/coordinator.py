@@ -405,7 +405,7 @@ class DuraGasDataUpdateCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         level_after = min((liters_after / usable_capacity) * 100, 100)
 
         refill_entry = {
-            "date": refill_date.isoformat(),
+            "date": refill_date,
             "liters": liters,
             "price_per_liter": price_per_liter,
             "total_cost": round(liters * price_per_liter, 2),
