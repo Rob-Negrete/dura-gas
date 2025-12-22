@@ -1,0 +1,9 @@
+{
+  "name": "DuraGas",
+  "content_in_root": false,
+  "render_readme": true,
+  "homeassistant": "2025.10.0",
+  "domains": ["dura_gas"],
+  "iot_class": "calculated",
+  "country": ["MX"]
+}
