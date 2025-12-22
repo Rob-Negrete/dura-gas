@@ -43,6 +43,18 @@ from .const import (
 _LOGGER = logging.getLogger(__name__)
 
 
+def _ensure_datetime(value: str | datetime | None) -> datetime | None:
+    """Ensure value is a datetime object, parsing from ISO string if needed."""
+    if value is None:
+        return None
+    if isinstance(value, datetime):
+        return value
+    try:
+        return datetime.fromisoformat(value)
+    except (ValueError, TypeError):
+        return None
+
+
 class DuraGasDataUpdateCoordinator(DataUpdateCoordinator[dict[str, Any]]):
     """Class to manage fetching DuraGas data."""
 
@@ -181,7 +193,14 @@ class DuraGasDataUpdateCoordinator(DataUpdateCoordinator[dict[str, Any]]):
             }
 
         last_refill = refill_history[-1]
-        last_refill_date = datetime.fromisoformat(last_refill["date"])
+        last_refill_date = _ensure_datetime(last_refill.get("date"))
+        if last_refill_date is None:
+            return {
+                "daily": 0.0,
+                "monthly": 0.0,
+                "days_since_refill": 0,
+                "liters_consumed": 0.0,
+            }
         now = dt_util.now()
         days_since_refill = max((now - last_refill_date).days, 1)
 
@@ -377,8 +396,8 @@ class DuraGasDataUpdateCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         last_update = self._stored_data.get("last_solar_update")
 
         if last_update:
-            last_update_date = datetime.fromisoformat(last_update)
-            if now.month != last_update_date.month or now.year != last_update_date.year:
+            last_update_date = _ensure_datetime(last_update)
+            if last_update_date and (now.month != last_update_date.month or now.year != last_update_date.year):
                 self._stored_data["solar_roi_accumulated"] += solar["savings_monthly"]
                 self._stored_data["last_solar_update"] = now.isoformat()
                 await self._async_save_stored_data()
@@ -405,7 +424,7 @@ class DuraGasDataUpdateCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         level_after = min((liters_after / usable_capacity) * 100, 100)
 
         refill_entry = {
-            "date": refill_date,
+            "date": refill_date.isoformat(),
             "liters": liters,
             "price_per_liter": price_per_liter,
             "total_cost": round(liters * price_per_liter, 2),
