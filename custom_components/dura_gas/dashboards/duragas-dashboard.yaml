@@ -1,0 +1,330 @@
+# DuraGas Dashboard - Complete Configuration
+# Generated: 2025-12-22
+# Version: 1.0.0
+#
+# USAGE OPTIONS:
+#
+# Option 1: Full Dashboard (paste in raw config editor for a new dashboard)
+#   Use the entire file including "views:" section
+#
+# Option 2: Single Card (paste in a card slot on existing dashboard)
+#   Use only the content starting from "type: vertical-stack" below
+#
+# =============================================================================
+
+views:
+  - title: DuraGas
+    path: duragas
+    icon: mdi:propane-tank
+    cards:
+      - type: vertical-stack
+        cards:
+          # ===========================================
+          # Section 1: Header
+          # ===========================================
+          - type: markdown
+            content: |
+              # 🔥 DuraGas - Monitor de Gas LP
+              ### *Que tu gas dure más*
+
+          # ===========================================
+          # Section 2: Quick Stats Glance
+          # ===========================================
+          - type: glance
+            entities:
+              - entity: sensor.duragas_tank_monitor_tank_level
+                name: Nivel
+                icon: mdi:propane-tank
+              - entity: sensor.duragas_tank_monitor_days_remaining
+                name: Días Restantes
+                icon: mdi:calendar-clock
+              - entity: sensor.duragas_tank_monitor_tank_value
+                name: Valor
+                icon: mdi:cash
+            columns: 3
+            show_name: true
+            show_state: true
+            show_icon: true
+
+          # ===========================================
+          # Section 3: Main Tank Level Gauge
+          # ===========================================
+          - type: gauge
+            entity: sensor.duragas_tank_monitor_tank_level
+            name: Nivel del Tanque
+            unit: "%"
+            min: 0
+            max: 100
+            needle: true
+            severity:
+              green: 50
+              yellow: 30
+              red: 0
+
+          # ===========================================
+          # Section 4: Current Tank Status
+          # ===========================================
+          - type: entities
+            title: "📊 Estado Actual del Tanque"
+            entities:
+              - entity: sensor.duragas_tank_monitor_tank_level
+                name: Nivel del Tanque
+                icon: mdi:propane-tank
+              - entity: sensor.duragas_tank_monitor_tank_liters
+                name: Litros en Tanque
+                icon: mdi:water
+              - entity: sensor.duragas_tank_monitor_tank_kilograms
+                name: Kilogramos en Tanque
+                icon: mdi:weight-kilogram
+              - entity: sensor.duragas_tank_monitor_tank_value
+                name: Valor del Gas
+                icon: mdi:cash
+
+          # ===========================================
+          # Section 5: Quick Actions - Main Buttons
+          # ===========================================
+          - type: markdown
+            content: |
+              ## ⚡ Acciones Rápidas
+
+          - type: horizontal-stack
+            cards:
+              - type: button
+                name: Registrar Recarga Completa
+                icon: mdi:gas-station
+                icon_height: 40px
+                tap_action:
+                  action: call-service
+                  service: dura_gas.record_refill
+                  data:
+                    liters: 96
+                    price_per_liter: 10.88
+                  confirmation:
+                    text: "¿Registrar recarga de 96L a $10.88/L? (Total: $1,044.48 MXN)"
+
+              - type: button
+                name: Actualizar Precio
+                icon: mdi:currency-usd
+                icon_height: 40px
+                tap_action:
+                  action: call-service
+                  service: dura_gas.update_price
+                  data:
+                    price_per_liter: 10.88
+                  confirmation:
+                    text: "¿Actualizar precio a $10.88/L?"
+
+          # ===========================================
+          # Section 6: Quick Level Update Buttons
+          # ===========================================
+          - type: horizontal-stack
+            cards:
+              - type: button
+                name: "75%"
+                icon: mdi:gauge-full
+                icon_height: 30px
+                tap_action:
+                  action: call-service
+                  service: dura_gas.update_level
+                  data:
+                    level_percent: 75
+                  confirmation:
+                    text: "¿Establecer nivel al 75%?"
+
+              - type: button
+                name: "50%"
+                icon: mdi:gauge
+                icon_height: 30px
+                tap_action:
+                  action: call-service
+                  service: dura_gas.update_level
+                  data:
+                    level_percent: 50
+                  confirmation:
+                    text: "¿Establecer nivel al 50%?"
+
+              - type: button
+                name: "25%"
+                icon: mdi:gauge-low
+                icon_height: 30px
+                tap_action:
+                  action: call-service
+                  service: dura_gas.update_level
+                  data:
+                    level_percent: 25
+                  confirmation:
+                    text: "¿Establecer nivel al 25%?"
+
+          # ===========================================
+          # Section 7: Consumption Analysis
+          # ===========================================
+          - type: entities
+            title: "📈 Análisis de Consumo"
+            entities:
+              - entity: sensor.duragas_tank_monitor_daily_consumption
+                name: Consumo Diario
+                icon: mdi:fire
+              - entity: sensor.duragas_tank_monitor_monthly_consumption
+                name: Consumo Mensual
+                icon: mdi:calendar-month
+              - entity: sensor.duragas_tank_monitor_days_since_refill
+                name: Días Desde Última Recarga
+                icon: mdi:calendar-clock
+              - entity: sensor.duragas_tank_monitor_liters_consumed
+                name: Litros Consumidos
+                icon: mdi:counter
+
+          # ===========================================
+          # Section 8: Projections
+          # ===========================================
+          - type: entities
+            title: "🔮 Proyecciones"
+            entities:
+              - entity: sensor.duragas_tank_monitor_days_remaining
+                name: Días Restantes
+                icon: mdi:calendar-arrow-right
+              - entity: sensor.duragas_tank_monitor_weeks_remaining
+                name: Semanas Restantes
+                icon: mdi:calendar-week
+              - entity: sensor.duragas_tank_monitor_next_refill_date
+                name: Fecha Próxima Recarga
+                icon: mdi:calendar-alert
+
+          # ===========================================
+          # Section 9: Current Recommendation
+          # ===========================================
+          - type: markdown
+            title: "💡 Recomendación de Recarga"
+            content: |
+              **Litros Recomendados:** {{ states('sensor.duragas_tank_monitor_recommended_liters') | round(1) }} L
+
+              **Costo Estimado:** ${{ states('sensor.duragas_tank_monitor_recommended_cost') | round(2) }} MXN
+
+              **Nivel Resultante:** {{ states('sensor.duragas_tank_monitor_resulting_level') | round(1) }}%
+
+              ---
+              *Basado en tu estrategia de recarga actual*
+
+          # ===========================================
+          # Section 10: Last Refill Information
+          # ===========================================
+          - type: entities
+            title: "⛽ Última Recarga"
+            entities:
+              - entity: sensor.duragas_tank_monitor_last_refill_date
+                name: Fecha
+                icon: mdi:calendar-check
+              - entity: sensor.duragas_tank_monitor_last_refill_liters
+                name: Litros
+                icon: mdi:gas-station
+              - entity: sensor.duragas_tank_monitor_last_refill_cost
+                name: Costo Total
+                icon: mdi:cash
+
+          # ===========================================
+          # Section 11: Cost Analysis
+          # ===========================================
+          - type: entities
+            title: "💰 Análisis de Costos"
+            entities:
+              - entity: sensor.duragas_tank_monitor_monthly_cost
+                name: Costo Mensual Proyectado
+                icon: mdi:cash-multiple
+              - entity: sensor.duragas_tank_monitor_refills_per_month
+                name: Recargas por Mes
+                icon: mdi:counter
+              - entity: sensor.duragas_tank_monitor_vs_cylinders
+                name: Ahorro vs Cilindros
+                icon: mdi:piggy-bank
+
+          # ===========================================
+          # Section 12: Alerts
+          # ===========================================
+          - type: entities
+            title: "🚨 Alertas"
+            entities:
+              - entity: binary_sensor.duragas_tank_monitor_low_level
+                name: Nivel Bajo
+                icon: mdi:alert-circle
+              - entity: binary_sensor.duragas_tank_monitor_refill_recommended
+                name: Recarga Recomendada
+                icon: mdi:gas-station-outline
+
+          # ===========================================
+          # Section 13: Historical Graph
+          # ===========================================
+          - type: history-graph
+            title: "📉 Historial de Nivel (7 días)"
+            entities:
+              - entity: sensor.duragas_tank_monitor_tank_level
+                name: Nivel del Tanque
+            hours_to_show: 168
+            refresh_interval: 300
+
+          # ===========================================
+          # Section 14: Additional Actions
+          # ===========================================
+          - type: markdown
+            content: |
+              ## ⚙️ Configuración Avanzada
+
+          - type: horizontal-stack
+            cards:
+              - type: button
+                name: Recarga Parcial (50L)
+                icon: mdi:gas-station-outline
+                icon_height: 30px
+                tap_action:
+                  action: call-service
+                  service: dura_gas.record_refill
+                  data:
+                    liters: 50
+                    price_per_liter: 10.88
+                  confirmation:
+                    text: "¿Registrar recarga de 50L a $10.88/L? (Total: $544 MXN)"
+
+              - type: button
+                name: Llenar Completo
+                icon: mdi:propane-tank
+                icon_height: 30px
+                tap_action:
+                  action: call-service
+                  service: dura_gas.update_level
+                  data:
+                    level_percent: 80
+                  confirmation:
+                    text: "¿Establecer nivel al 80% (tanque lleno)?"
+
+          - type: horizontal-stack
+            cards:
+              - type: button
+                name: Estrategia Completa
+                icon: mdi:checkbox-marked-circle
+                icon_height: 30px
+                tap_action:
+                  action: call-service
+                  service: dura_gas.set_strategy
+                  data:
+                    strategy: fill_complete
+                  confirmation:
+                    text: "¿Cambiar estrategia a 'Llenar Completo'?"
+
+              - type: button
+                name: Estrategia $500
+                icon: mdi:cash-check
+                icon_height: 30px
+                tap_action:
+                  action: call-service
+                  service: dura_gas.set_strategy
+                  data:
+                    strategy: fixed_500
+                  confirmation:
+                    text: "¿Cambiar estrategia a 'Monto Fijo $500'?"
+
+          # ===========================================
+          # Section 15: Footer
+          # ===========================================
+          - type: markdown
+            content: |
+              ---
+              *DuraGas v0.1.0-dev.0 | Tanque: 120L | Actualización: cada 5 min*
