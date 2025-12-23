@@ -1,0 +1,131 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <defs>
+    <!-- Gradient for metallic tank -->
+    <linearGradient id="tankGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#E3F2FD;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#2196F3;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1565C0;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Shine gradient -->
+    <radialGradient id="shine">
+      <stop offset="0%" style="stop-color:#FFFFFF;stop-opacity:0.6" />
+      <stop offset="100%" style="stop-color:#FFFFFF;stop-opacity:0" />
+    </radialGradient>
+  </defs>
+  
+  <!-- Tank body - horizontal cylinder -->
+  <g id="tank-body">
+    <!-- Main cylinder body -->
+    <ellipse cx="128" cy="145" rx="95" ry="55" fill="url(#tankGradient)"/>
+    
+    <!-- Left dome cap -->
+    <ellipse cx="33" cy="145" rx="20" ry="55" fill="#1565C0"/>
+    
+    <!-- Right dome cap -->
+    <ellipse cx="223" cy="145" rx="20" ry="55" fill="#0D47A1"/>
+    
+    <!-- Center body rectangle -->
+    <rect x="33" y="90" width="190" height="110" fill="url(#tankGradient)"/>
+    
+    <!-- Shine/highlight on tank -->
+    <ellipse cx="128" cy="120" rx="70" ry="25" fill="url(#shine)"/>
+  </g>
+  
+  <!-- Support legs/base -->
+  <g id="supports">
+    <!-- Left leg -->
+    <rect x="60" y="195" width="12" height="30" rx="2" fill="#424242"/>
+    <rect x="55" y="220" width="22" height="8" rx="2" fill="#616161"/>
+    
+    <!-- Right leg -->
+    <rect x="184" y="195" width="12" height="30" rx="2" fill="#424242"/>
+    <rect x="179" y="220" width="22" height="8" rx="2" fill="#616161"/>
+  </g>
+  
+  <!-- Top valve assembly -->
+  <g id="valve-assembly">
+    <!-- Dome on top -->
+    <ellipse cx="128" cy="75" rx="25" ry="15" fill="#0D47A1"/>
+    <rect x="115" y="75" width="26" height="15" fill="#0D47A1"/>
+    
+    <!-- Valve wheel -->
+    <circle cx="128" cy="65" r="12" fill="#424242"/>
+    <circle cx="128" cy="65" r="8" fill="none" stroke="#616161" stroke-width="2"/>
+    <line x1="128" y1="57" x2="128" y2="73" stroke="#616161" stroke-width="2"/>
+    <line x1="120" y1="65" x2="136" y2="65" stroke="#616161" stroke-width="2"/>
+    
+    <!-- Pipe connector -->
+    <rect x="120" y="50" width="16" height="15" rx="2" fill="#616161"/>
+  </g>
+  
+  <!-- Safety gauge on front -->
+  <g id="gauge">
+    <circle cx="165" cy="110" r="15" fill="#212121" opacity="0.3"/>
+    <circle cx="165" cy="110" r="12" fill="#FFFFFF"/>
+    <circle cx="165" cy="110" r="10" fill="#E0E0E0"/>
+    <!-- Needle -->
+    <line x1="165" y1="110" x2="165" y2="102" stroke="#FF6F00" stroke-width="2" stroke-linecap="round"/>
+  </g>
+  
+  <!-- SMIRKING FACE on tank body 😏 -->
+  <g id="smirk-face">
+    <!-- Left eye - slightly narrowed -->
+    <g id="left-eye">
+      <ellipse cx="95" cy="140" rx="9" ry="12" fill="#263238"/>
+      <ellipse cx="97" cy="138" rx="3" ry="5" fill="#FFFFFF"/>
+    </g>
+    
+    <!-- Right eye - even more narrowed (winking slightly) -->
+    <g id="right-eye">
+      <ellipse cx="135" cy="141" rx="8" ry="10" fill="#263238"/>
+      <ellipse cx="136" cy="139" rx="3" ry="4" fill="#FFFFFF"/>
+    </g>
+    
+    <!-- Smirk - asymmetric smile, higher on right side -->
+    <path d="M 85 163 Q 105 172 145 165" 
+          fill="none" 
+          stroke="#263238" 
+          stroke-width="4" 
+          stroke-linecap="round"/>
+    
+    <!-- Teeth showing on one side (adds to smirk) -->
+    <!--
+    <g id="teeth">      
+      <rect x="120" y="167" width="6" height="7" fill="#FFFFFF" rx="1"/>
+      <rect x="128" y="166" width="6" height="7" fill="#FFFFFF" rx="1"/>
+      <rect x="136" y="166" width="6" height="6" fill="#FFFFFF" rx="1"/>
+    </g>
+    -->
+    
+    <!-- Raised eyebrow on right side (adds to smirk) -->
+    <path d="M 125 132 Q 135 128 145 130" 
+          stroke="#263238" 
+          stroke-width="2.5" 
+          fill="none" 
+          stroke-linecap="round"/>
+    
+    <!-- Normal eyebrow on left -->
+    <path d="M 85 133 Q 95 131 105 133" 
+          stroke="#263238" 
+          stroke-width="2.5" 
+          fill="none" 
+          stroke-linecap="round"/>
+    
+    <!-- Slight blush for charm -->
+    <ellipse cx="155" cy="155" rx="8" ry="5" fill="#FF6F00" opacity="0.25"/>
+  </g>
+  
+  <!-- Brand stripe (optional) -->
+  <g id="brand-stripe">
+    <rect x="55" y="125" width="60" height="8" fill="#FF6F00" opacity="0.5" rx="2"/>
+  </g>
+  
+  <!-- Small flame icon bottom right corner -->
+  <g id="flame-icon" transform="translate(205, 185)">
+    <path d="M 0 -8 Q -3 -5 -3 -1 Q -3 2 0 5 Q 3 2 3 -1 Q 3 -5 0 -8 Z" 
+          fill="#FF6F00"/>
+    <path d="M 0 -5 Q -1.5 -3 -1.5 -1 Q -1.5 1 0 3 Q 1.5 1 1.5 -1 Q 1.5 -3 0 -5 Z" 
+          fill="#FFA726"/>
+  </g>
+</svg>
