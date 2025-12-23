@@ -12,7 +12,6 @@ from homeassistant.components.number import (
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import UnitOfVolume
 from homeassistant.core import HomeAssistant
-from homeassistant.const import CURRENCY_DOLLAR
 from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
@@ -43,7 +42,7 @@ NUMBER_DESCRIPTIONS: tuple[DuraGasNumberEntityDescription, ...] = (
     DuraGasNumberEntityDescription(
         key="price_per_liter_input",
         translation_key="price_per_liter_input",
-        native_unit_of_measurement=CURRENCY_DOLLAR,
+        native_unit_of_measurement="MXN/L",
         native_min_value=8,
         native_max_value=25,
         native_step=0.01,
