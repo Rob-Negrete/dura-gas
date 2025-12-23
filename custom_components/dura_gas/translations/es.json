@@ -180,6 +180,14 @@
       "solar_active": {
         "name": "Solar Activo"
       }
+    },
+    "number": {
+      "refill_liters_input": {
+        "name": "Litros a Recargar"
+      },
+      "price_per_liter_input": {
+        "name": "Precio por Litro"
+      }
     }
   },
   "services": {

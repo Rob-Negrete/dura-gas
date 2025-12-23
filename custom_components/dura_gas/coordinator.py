@@ -495,3 +495,13 @@ class DuraGasDataUpdateCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         await self.async_refresh()
 
         _LOGGER.info("Set refill strategy to %s", strategy)
+
+    def get_input_value(self, key: str) -> float | None:
+        """Get an input value from storage."""
+        return self._stored_data.get(key)
+
+    async def async_set_input_value(self, key: str, value: float) -> None:
+        """Set an input value in storage."""
+        self._stored_data[key] = value
+        await self._async_save_stored_data()
+        self.async_set_updated_data(self.data)

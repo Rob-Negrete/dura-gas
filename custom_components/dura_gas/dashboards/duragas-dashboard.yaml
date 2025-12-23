@@ -90,9 +90,9 @@ views:
           - type: entities
             title: "⛽ Registrar Recarga"
             entities:
-              - entity: input_number.gas_refill_liters
+              - entity: number.duragas_tank_monitor_refill_liters_input
                 name: Litros a Recargar
-              - entity: input_number.gas_price_per_liter
+              - entity: number.duragas_tank_monitor_price_per_liter_input
                 name: Precio por Litro
 
           - type: horizontal-stack
@@ -105,10 +105,10 @@ views:
                   action: call-service
                   service: dura_gas.record_refill
                   data:
-                    liters: "{{ states('input_number.gas_refill_liters') | float }}"
-                    price_per_liter: "{{ states('input_number.gas_price_per_liter') | float }}"
+                    liters: "{{ states('number.duragas_tank_monitor_refill_liters_input') | float }}"
+                    price_per_liter: "{{ states('number.duragas_tank_monitor_price_per_liter_input') | float }}"
                   confirmation:
-                    text: "¿Registrar recarga de {{ states('input_number.gas_refill_liters') }}L a ${{ states('input_number.gas_price_per_liter') }}/L? (Total: ${{ (states('input_number.gas_refill_liters') | float * states('input_number.gas_price_per_liter') | float) | round(2) }} MXN)"
+                    text: "¿Registrar recarga de {{ states('number.duragas_tank_monitor_refill_liters_input') }}L a ${{ states('number.duragas_tank_monitor_price_per_liter_input') }}/L? (Total: ${{ (states('number.duragas_tank_monitor_refill_liters_input') | float * states('number.duragas_tank_monitor_price_per_liter_input') | float) | round(2) }} MXN)"
 
               - type: button
                 name: Actualizar Precio
@@ -118,9 +118,9 @@ views:
                   action: call-service
                   service: dura_gas.update_price
                   data:
-                    price_per_liter: "{{ states('input_number.gas_price_per_liter') | float }}"
+                    price_per_liter: "{{ states('number.duragas_tank_monitor_price_per_liter_input') | float }}"
                   confirmation:
-                    text: "¿Actualizar precio a ${{ states('input_number.gas_price_per_liter') }}/L?"
+                    text: "¿Actualizar precio a ${{ states('number.duragas_tank_monitor_price_per_liter_input') }}/L?"
 
           # ===========================================
           # Section 6: Quick Level Update Buttons
@@ -287,9 +287,9 @@ views:
                   service: dura_gas.record_refill
                   data:
                     liters: 50
-                    price_per_liter: "{{ states('input_number.gas_price_per_liter') | float }}"
+                    price_per_liter: "{{ states('number.duragas_tank_monitor_price_per_liter_input') | float }}"
                   confirmation:
-                    text: "¿Registrar recarga de 50L a ${{ states('input_number.gas_price_per_liter') }}/L? (Total: ${{ (50 * states('input_number.gas_price_per_liter') | float) | round(2) }} MXN)"
+                    text: "¿Registrar recarga de 50L a ${{ states('number.duragas_tank_monitor_price_per_liter_input') }}/L? (Total: ${{ (50 * states('number.duragas_tank_monitor_price_per_liter_input') | float) | round(2) }} MXN)"
 
               - type: button
                 name: Llenar Completo
