@@ -5,7 +5,6 @@ from dataclasses import dataclass
 from typing import Any
 
 from homeassistant.components.number import (
-    NumberDeviceClass,
     NumberEntity,
     NumberEntityDescription,
     NumberMode,
@@ -44,7 +43,6 @@ NUMBER_DESCRIPTIONS: tuple[DuraGasNumberEntityDescription, ...] = (
         key="price_per_liter_input",
         translation_key="price_per_liter_input",
         native_unit_of_measurement="MXN/L",
-        device_class=NumberDeviceClass.MONETARY,
         native_min_value=8,
         native_max_value=25,
         native_step=0.01,
