@@ -87,20 +87,28 @@ views:
             content: |
               ## ⚡ Acciones Rápidas
 
+          - type: entities
+            title: "⛽ Registrar Recarga"
+            entities:
+              - entity: input_number.gas_refill_liters
+                name: Litros a Recargar
+              - entity: input_number.gas_price_per_liter
+                name: Precio por Litro
+
           - type: horizontal-stack
             cards:
               - type: button
-                name: Registrar Recarga Completa
+                name: Registrar Recarga
                 icon: mdi:gas-station
                 icon_height: 40px
                 tap_action:
                   action: call-service
                   service: dura_gas.record_refill
                   data:
-                    liters: 96
-                    price_per_liter: 10.88
+                    liters: "{{ states('input_number.gas_refill_liters') | float }}"
+                    price_per_liter: "{{ states('input_number.gas_price_per_liter') | float }}"
                   confirmation:
-                    text: "¿Registrar recarga de 96L a $10.88/L? (Total: $1,044.48 MXN)"
+                    text: "¿Registrar recarga de {{ states('input_number.gas_refill_liters') }}L a ${{ states('input_number.gas_price_per_liter') }}/L? (Total: ${{ (states('input_number.gas_refill_liters') | float * states('input_number.gas_price_per_liter') | float) | round(2) }} MXN)"
 
               - type: button
                 name: Actualizar Precio
@@ -110,9 +118,9 @@ views:
                   action: call-service
                   service: dura_gas.update_price
                   data:
-                    price_per_liter: 10.88
+                    price_per_liter: "{{ states('input_number.gas_price_per_liter') | float }}"
                   confirmation:
-                    text: "¿Actualizar precio a $10.88/L?"
+                    text: "¿Actualizar precio a ${{ states('input_number.gas_price_per_liter') }}/L?"
 
           # ===========================================
           # Section 6: Quick Level Update Buttons
@@ -271,7 +279,7 @@ views:
           - type: horizontal-stack
             cards:
               - type: button
-                name: Recarga Parcial (50L)
+                name: Recarga Rápida 50L
                 icon: mdi:gas-station-outline
                 icon_height: 30px
                 tap_action:
@@ -279,9 +287,9 @@ views:
                   service: dura_gas.record_refill
                   data:
                     liters: 50
-                    price_per_liter: 10.88
+                    price_per_liter: "{{ states('input_number.gas_price_per_liter') | float }}"
                   confirmation:
-                    text: "¿Registrar recarga de 50L a $10.88/L? (Total: $544 MXN)"
+                    text: "¿Registrar recarga de 50L a ${{ states('input_number.gas_price_per_liter') }}/L? (Total: ${{ (50 * states('input_number.gas_price_per_liter') | float) | round(2) }} MXN)"
 
               - type: button
                 name: Llenar Completo
