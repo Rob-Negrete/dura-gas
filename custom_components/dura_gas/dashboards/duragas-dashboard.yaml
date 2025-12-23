@@ -97,30 +97,50 @@ views:
 
           - type: horizontal-stack
             cards:
-              - type: button
+              - type: custom:button-card
                 name: Registrar Recarga
                 icon: mdi:gas-station
-                icon_height: 40px
+                styles:
+                  card:
+                    - height: 80px
+                  icon:
+                    - width: 40px
+                    - height: 40px
                 tap_action:
                   action: call-service
                   service: dura_gas.record_refill
-                  data:
-                    liters: "{{ states('number.duragas_tank_monitor_refill_liters_input') | float }}"
-                    price_per_liter: "{{ states('number.duragas_tank_monitor_price_per_liter_input') | float }}"
+                  service_data:
+                    liters: "[[[ return parseFloat(states['number.duragas_tank_monitor_refill_liters_input'].state) ]]]"
+                    price_per_liter: "[[[ return parseFloat(states['number.duragas_tank_monitor_price_per_liter_input'].state) ]]]"
                   confirmation:
-                    text: "¿Registrar recarga de {{ states('number.duragas_tank_monitor_refill_liters_input') }}L a ${{ states('number.duragas_tank_monitor_price_per_liter_input') }}/L? (Total: ${{ (states('number.duragas_tank_monitor_refill_liters_input') | float * states('number.duragas_tank_monitor_price_per_liter_input') | float) | round(2) }} MXN)"
+                    text: |
+                      [[[
+                        const liters = parseFloat(states['number.duragas_tank_monitor_refill_liters_input'].state);
+                        const price = parseFloat(states['number.duragas_tank_monitor_price_per_liter_input'].state);
+                        const total = (liters * price).toFixed(2);
+                        return `¿Registrar recarga de ${liters}L a $${price}/L?\n\nTotal: $${total} MXN`;
+                      ]]]
 
-              - type: button
+              - type: custom:button-card
                 name: Actualizar Precio
                 icon: mdi:currency-usd
-                icon_height: 40px
+                styles:
+                  card:
+                    - height: 80px
+                  icon:
+                    - width: 40px
+                    - height: 40px
                 tap_action:
                   action: call-service
                   service: dura_gas.update_price
-                  data:
-                    price_per_liter: "{{ states('number.duragas_tank_monitor_price_per_liter_input') | float }}"
+                  service_data:
+                    price_per_liter: "[[[ return parseFloat(states['number.duragas_tank_monitor_price_per_liter_input'].state) ]]]"
                   confirmation:
-                    text: "¿Actualizar precio a ${{ states('number.duragas_tank_monitor_price_per_liter_input') }}/L?"
+                    text: |
+                      [[[
+                        const price = parseFloat(states['number.duragas_tank_monitor_price_per_liter_input'].state);
+                        return `¿Actualizar precio a $${price}/L?`;
+                      ]]]
 
           # ===========================================
           # Section 6: Quick Level Update Buttons
@@ -278,18 +298,28 @@ views:
 
           - type: horizontal-stack
             cards:
-              - type: button
+              - type: custom:button-card
                 name: Recarga Rápida 50L
                 icon: mdi:gas-station-outline
-                icon_height: 30px
+                styles:
+                  card:
+                    - height: 60px
+                  icon:
+                    - width: 30px
+                    - height: 30px
                 tap_action:
                   action: call-service
                   service: dura_gas.record_refill
-                  data:
+                  service_data:
                     liters: 50
-                    price_per_liter: "{{ states('number.duragas_tank_monitor_price_per_liter_input') | float }}"
+                    price_per_liter: "[[[ return parseFloat(states['number.duragas_tank_monitor_price_per_liter_input'].state) ]]]"
                   confirmation:
-                    text: "¿Registrar recarga de 50L a ${{ states('number.duragas_tank_monitor_price_per_liter_input') }}/L? (Total: ${{ (50 * states('number.duragas_tank_monitor_price_per_liter_input') | float) | round(2) }} MXN)"
+                    text: |
+                      [[[
+                        const price = parseFloat(states['number.duragas_tank_monitor_price_per_liter_input'].state);
+                        const total = (50 * price).toFixed(2);
+                        return `¿Registrar recarga de 50L a $${price}/L?\n\nTotal: $${total} MXN`;
+                      ]]]
 
               - type: button
                 name: Llenar Completo
