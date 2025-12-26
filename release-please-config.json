@@ -7,7 +7,7 @@
       "include-component-in-tag": false,
       "include-v-in-tag": true,
       "changelog-path": "CHANGELOG.md",
-      "changelog-type": "github",
+      "changelog-type": "default",
       "bump-minor-pre-major": true,
       "bump-patch-for-minor-pre-major": true,
       "prerelease": true,
