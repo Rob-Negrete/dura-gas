@@ -191,6 +191,17 @@
       "price_per_liter_input": {
         "name": "Precio por Litro"
       }
+    },
+    "select": {
+      "analytics_period": {
+        "name": "Periodo de Analytics",
+        "state": {
+          "3_months": "3 Meses",
+          "6_months": "6 Meses",
+          "9_months": "9 Meses",
+          "12_months": "12 Meses"
+        }
+      }
     }
   },
   "services": {

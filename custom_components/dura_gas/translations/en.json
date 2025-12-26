@@ -191,6 +191,17 @@
       "price_per_liter_input": {
         "name": "Price per Liter Input"
       }
+    },
+    "select": {
+      "analytics_period": {
+        "name": "Analytics Period",
+        "state": {
+          "3_months": "3 Months",
+          "6_months": "6 Months",
+          "9_months": "9 Months",
+          "12_months": "12 Months"
+        }
+      }
     }
   },
   "services": {

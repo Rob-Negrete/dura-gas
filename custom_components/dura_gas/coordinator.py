@@ -12,6 +12,7 @@ from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, Upda
 from homeassistant.util import dt as dt_util
 
 from .const import (
+    ANALYTICS_PERIOD_HOURS,
     CONF_HAS_SOLAR,
     CONF_INITIAL_LEVEL,
     CONF_LOW_THRESHOLD,
@@ -25,6 +26,7 @@ from .const import (
     CONF_TANK_SIZE,
     CONF_USABLE_PERCENTAGE,
     CYLINDER_MONTHLY_COST,
+    DEFAULT_ANALYTICS_PERIOD,
     DEFAULT_PRICE_PER_LITER,
     DEFAULT_SOLAR_EFFICIENCY,
     DEFAULT_USABLE_PERCENTAGE,
@@ -36,6 +38,7 @@ from .const import (
     STORAGE_VERSION,
     TANK_SIZES,
     WATER_HEATING_BASE_PERCENTAGE,
+    AnalyticsPeriod,
     HeatingMode,
     RefillStrategy,
 )
@@ -114,6 +117,10 @@ class DuraGasDataUpdateCoordinator(DataUpdateCoordinator[dict[str, Any]]):
 
             await self._update_solar_roi(solar)
 
+            analytics_period = self._stored_data.get(
+                "analytics_period", DEFAULT_ANALYTICS_PERIOD.value
+            )
+
             return {
                 "config": config,
                 "tank": tank,
@@ -123,6 +130,8 @@ class DuraGasDataUpdateCoordinator(DataUpdateCoordinator[dict[str, Any]]):
                 "strategy": strategy,
                 "solar": solar,
                 "refill_history": self._stored_data.get("refill_history", []),
+                "analytics_period": analytics_period,
+                "analytics_hours": ANALYTICS_PERIOD_HOURS.get(analytics_period, 2160),
             }
         except Exception as err:
             _LOGGER.error("Error updating DuraGas data: %s", err)
@@ -505,3 +514,11 @@ class DuraGasDataUpdateCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         self._stored_data[key] = value
         await self._async_save_stored_data()
         self.async_set_updated_data(self.data)
+
+    async def async_set_analytics_period(self, period: str) -> None:
+        """Set analytics period for historical graphs."""
+        self._stored_data["analytics_period"] = period
+        await self._async_save_stored_data()
+        await self.async_refresh()
+
+        _LOGGER.info("Set analytics period to %s", period)
