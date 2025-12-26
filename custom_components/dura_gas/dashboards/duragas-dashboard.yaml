@@ -261,7 +261,7 @@ views:
               - entity: sensor.duragas_tank_monitor_refills_per_month
                 name: Recargas por Mes
                 icon: mdi:counter
-              - entity: sensor.duragas_tank_monitor_vs_cylinders
+              - entity: sensor.duragas_tank_monitor_savings_vs_cylinders
                 name: Ahorro vs Cilindros
                 icon: mdi:piggy-bank
 
