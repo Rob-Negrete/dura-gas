@@ -6,7 +6,7 @@ from typing import Any, Final
 
 # Integration domain
 DOMAIN: Final = "dura_gas"
-VERSION: Final = "0.1.0-dev.0"  # x-release-please-version
+VERSION: Final = "0.1.0-dev.1"  # x-release-please-version
 
 # Gas LP physics
 LP_GAS_KG_TO_LITERS: Final = 1.96
