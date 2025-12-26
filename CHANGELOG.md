@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.0-dev.2](https://github.com/Rob-Negrete/dura-gas/compare/v0.1.0-dev.1...v0.1.0-dev.2) (2025-12-26)
+
+
+### Features
+
+* Select analytics period ([96fc467](https://github.com/Rob-Negrete/dura-gas/commit/96fc467b4d219909795da441a762f737d86fdf8c))
+* Select analytics period ([dff44d3](https://github.com/Rob-Negrete/dura-gas/commit/dff44d32bebe25418768cee4e406093d486c2e03))
+
 ## [0.1.0-dev.1](https://github.com/Rob-Negrete/dura-gas/compare/v0.1.0-dev.0...v0.1.0-dev.1) (2025-12-26)
 
 
