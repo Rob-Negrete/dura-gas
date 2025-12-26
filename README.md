@@ -39,6 +39,12 @@ A Home Assistant custom integration for monitoring LP gas consumption and solar 
 - Refill recommended alerts
 - Solar system status
 
+### Historical Analytics
+- Price per liter tracking over time
+- Monthly consumption trends
+- Cost analysis and comparisons
+- Native Home Assistant dashboard (no custom cards required)
+
 ## Installation
 
 ### Manual Installation
@@ -107,6 +113,11 @@ A Home Assistant custom integration for monitoring LP gas consumption and solar 
 | Solar ROI Accumulated | Total accumulated savings | MXN |
 | Hot Water Consumption | Daily hot water gas usage | L/day |
 
+### Analytics (Diagnostic)
+| Sensor | Description | Unit |
+|--------|-------------|------|
+| Gas Price History | Price per liter for historical tracking | MXN/L |
+
 ## Services
 
 ### `dura_gas.record_refill`
@@ -171,6 +182,26 @@ entities:
   - entity: binary_sensor.duragas_low_level
   - entity: binary_sensor.duragas_refill_recommended
 ```
+
+## Analytics Dashboard
+
+DuraGas includes a pre-built analytics dashboard for visualizing historical data. Import from `dashboards/analytics_dashboard.yaml`.
+
+### Features
+- 6-month consumption trends
+- Price history tracking
+- Monthly cost analysis
+- Savings vs cylinders comparison
+- Statistics summaries (min/max/average)
+- Recent refills and projections
+
+### Installation
+1. Go to Settings > Dashboards > Add Dashboard
+2. Create a new dashboard or edit existing
+3. Open Raw Configuration Editor
+4. Copy the contents from `dashboards/analytics_dashboard.yaml`
+
+All analytics use native Home Assistant cards - no custom components required.
 
 ## Automation Examples
 

@@ -14,6 +14,7 @@ from homeassistant.components.sensor import (
 )
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import PERCENTAGE, UnitOfMass, UnitOfTime, UnitOfVolume
+from homeassistant.const import EntityCategory
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
@@ -289,6 +290,18 @@ SENSOR_DESCRIPTIONS: tuple[DuraGasSensorEntityDescription, ...] = (
         if data.get("solar")
         else None,
         condition_fn=lambda data: data.get("config", {}).get("has_solar", False),
+    ),
+    # Historical Analytics (diagnostic sensors for graphing)
+    DuraGasSensorEntityDescription(
+        key="price_per_liter_tracking",
+        translation_key="price_per_liter_tracking",
+        native_unit_of_measurement="MXN/L",
+        device_class=None,  # CRITICAL: No MONETARY to allow MEASUREMENT state_class
+        state_class=SensorStateClass.MEASUREMENT,  # Enables historical graphing
+        suggested_display_precision=2,
+        icon="mdi:chart-line-variant",
+        entity_category=EntityCategory.DIAGNOSTIC,  # Hidden by default in UI
+        value_fn=lambda data: data.get("config", {}).get("price_per_liter"),
     ),
 )
 

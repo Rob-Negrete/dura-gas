@@ -168,6 +168,9 @@
       },
       "hot_water_consumption": {
         "name": "Hot Water Consumption"
+      },
+      "price_per_liter_tracking": {
+        "name": "Gas Price History"
       }
     },
     "binary_sensor": {
