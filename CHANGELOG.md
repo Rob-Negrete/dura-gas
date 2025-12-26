@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Historical analytics sensor for price tracking (`price_per_liter_tracking`)
-- Analytics dashboard with consumption and cost trends (`dashboards/analytics_dashboard.yaml`)
+- Analytics dashboard with consumption and cost trends (`custom_components/dura_gas/dashboards/analytics_dashboard.yaml`)
 - Price per liter tracking over time (diagnostic sensor with graphing support)
 - 6-month historical graphs for consumption, costs, and price trends
 
