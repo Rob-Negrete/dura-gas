@@ -185,7 +185,7 @@ entities:
 
 ## Analytics Dashboard
 
-DuraGas includes a pre-built analytics dashboard for visualizing historical data. Import from `dashboards/analytics_dashboard.yaml`.
+DuraGas includes a pre-built analytics dashboard for visualizing historical data. Import from `custom_components/dura_gas/dashboards/analytics_dashboard.yaml`.
 
 ### Features
 - 6-month consumption trends

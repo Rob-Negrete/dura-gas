@@ -10,6 +10,13 @@
 # Option 2: Single Card (paste in a card slot on existing dashboard)
 #   Use only the content starting from "type: vertical-stack" below
 #
+# NAVIGATION NOTE:
+# Both views (duragas and duragas-analytics) are in the same dashboard.
+# Navigation paths use the view path only, prefixed with the dashboard URL.
+# Example: If your dashboard URL is /lovelace-gas, navigation would be:
+#   /lovelace-gas/duragas-analytics
+#
+# After importing, update DASHBOARD_URL below to match your dashboard URL:
 # =============================================================================
 
 views:
@@ -20,12 +27,21 @@ views:
       - type: vertical-stack
         cards:
           # ===========================================
-          # Section 1: Header
+          # Section 1: Header with Analytics Link
           # ===========================================
-          - type: markdown
-            content: |
-              # 🔥 DuraGas - Monitor de Gas LP
-              ### *Que tu gas dure más*
+          - type: horizontal-stack
+            cards:
+              - type: markdown
+                content: |
+                  # 🔥 DuraGas - Monitor de Gas LP
+                  ### *Que tu gas dure más*
+              - type: button
+                name: Analytics
+                icon: mdi:chart-box
+                icon_height: 40px
+                tap_action:
+                  action: navigate
+                  navigation_path: duragas-analytics
 
           # ===========================================
           # Section 2: Quick Stats Glance
@@ -366,3 +382,170 @@ views:
             content: |
               ---
               *DuraGas v0.1.0-dev.0 | Tanque: 120L | Actualización: cada 5 min*
+
+  # =============================================================================
+  # ANALYTICS VIEW
+  # =============================================================================
+  - title: Analytics
+    path: duragas-analytics
+    icon: mdi:chart-box
+    type: panel
+    cards:
+      - type: vertical-stack
+        cards:
+          # Header with Back Button
+          - type: horizontal-stack
+            cards:
+              - type: markdown
+                content: |
+                  # Analisis Historico DuraGas
+                  **Periodo:** Ultimos 6 meses
+
+                  Monitoreo de consumo, precios y costos de gas LP a lo largo del tiempo.
+              - type: button
+                name: Volver
+                icon: mdi:arrow-left
+                icon_height: 40px
+                tap_action:
+                  action: navigate
+                  navigation_path: duragas
+
+          # Current Status Summary
+          - type: horizontal-stack
+            cards:
+              - type: entity
+                entity: sensor.duragas_tank_monitor_tank_level
+                name: Nivel Actual
+                icon: mdi:propane-tank
+              - type: entity
+                entity: sensor.duragas_tank_monitor_monthly_consumption
+                name: Consumo Mensual
+                icon: mdi:calendar-month
+              - type: entity
+                entity: sensor.duragas_tank_monitor_monthly_cost
+                name: Costo Mensual
+                icon: mdi:cash-multiple
+              - type: entity
+                entity: sensor.duragas_tank_monitor_savings_vs_cylinders
+                name: Ahorro vs Cilindros
+                icon: mdi:compare-horizontal
+
+          # Monthly Consumption Trend
+          - type: history-graph
+            title: Consumo Mensual (L/mes)
+            entities:
+              - entity: sensor.duragas_tank_monitor_monthly_consumption
+                name: Litros/mes
+            hours_to_show: 4320
+            refresh_interval: 3600
+
+          # Price History
+          - type: history-graph
+            title: Precio del Gas LP (MXN/L)
+            entities:
+              - entity: sensor.duragas_tank_monitor_gas_price_history
+                name: Precio por Litro
+            hours_to_show: 4320
+            refresh_interval: 3600
+
+          # Monthly Cost
+          - type: history-graph
+            title: Gasto Mensual (MXN/mes)
+            entities:
+              - entity: sensor.duragas_tank_monitor_monthly_cost
+                name: Costo Mensual
+            hours_to_show: 4320
+            refresh_interval: 3600
+
+          # Tank Level History
+          - type: history-graph
+            title: Nivel del Tanque (%)
+            entities:
+              - entity: sensor.duragas_tank_monitor_tank_level
+                name: Nivel
+            hours_to_show: 4320
+            refresh_interval: 3600
+
+          # Savings vs Cylinders
+          - type: history-graph
+            title: Ahorro vs Cilindros (MXN/mes)
+            entities:
+              - entity: sensor.duragas_tank_monitor_savings_vs_cylinders
+                name: Ahorro Mensual
+            hours_to_show: 4320
+            refresh_interval: 3600
+
+          # Statistics Summary (90 days)
+          - type: statistics-graph
+            title: Estadisticas de Consumo (90 dias)
+            entities:
+              - sensor.duragas_tank_monitor_monthly_consumption
+            days_to_show: 90
+            stat_types:
+              - mean
+              - min
+              - max
+
+          # Daily Consumption Pattern
+          - type: statistics-graph
+            title: Patron de Consumo Diario (30 dias)
+            entities:
+              - sensor.duragas_tank_monitor_daily_consumption
+            days_to_show: 30
+            stat_types:
+              - mean
+              - min
+              - max
+
+          # Recent Refills Information
+          - type: markdown
+            content: |
+              ## Ultimas Recargas
+
+              | Dato | Valor |
+              |------|-------|
+              | Fecha ultima recarga | {{ states('sensor.duragas_tank_monitor_last_refill_date') }} |
+              | Litros recargados | {{ states('sensor.duragas_tank_monitor_last_refill_liters') }} L |
+              | Costo total | ${{ states('sensor.duragas_tank_monitor_last_refill_cost') }} MXN |
+              | Dias desde recarga | {{ states('sensor.duragas_tank_monitor_days_since_refill') }} dias |
+
+              ---
+
+              ### Proyecciones
+
+              | Dato | Valor |
+              |------|-------|
+              | Dias restantes | {{ states('sensor.duragas_tank_monitor_days_remaining') }} dias |
+              | Proxima recarga | {{ states('sensor.duragas_tank_monitor_next_refill_date') }} |
+              | Litros recomendados | {{ states('sensor.duragas_tank_monitor_recommended_liters') }} L |
+              | Costo estimado | ${{ states('sensor.duragas_tank_monitor_recommended_cost') }} MXN |
+
+          # Cost Comparison Card
+          - type: entities
+            title: Comparacion de Costos
+            entities:
+              - entity: sensor.duragas_tank_monitor_monthly_cost
+                name: Costo Mensual Actual
+                icon: mdi:cash
+              - entity: sensor.duragas_tank_monitor_savings_vs_cylinders
+                name: Ahorro vs Cilindros
+                icon: mdi:piggy-bank
+              - entity: sensor.duragas_tank_monitor_refills_per_month
+                name: Recargas por Mes
+                icon: mdi:counter
+
+          # Cylinder Comparison Note
+          - type: markdown
+            content: |
+              *Comparacion basada en costo de cilindros: $584 MXN/mes*
+
+          # Usage Tips
+          - type: markdown
+            content: |
+              ---
+              ### Consejos de Uso
+
+              - **Graficas historicas**: Los datos se acumulan con el tiempo. Las graficas seran mas utiles despues de algunas semanas de uso.
+              - **Precio del gas**: Actualiza el precio cuando haya cambios usando el servicio `dura_gas.update_price`.
+              - **Precision**: Registra cada recarga con `dura_gas.record_refill` para mejorar las proyecciones.
+              - **Ahorro**: Un valor positivo en "Ahorro vs Cilindros" significa que estas ahorrando comparado con usar cilindros tradicionales.
