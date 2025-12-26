@@ -399,9 +399,7 @@ views:
               - type: markdown
                 content: |
                   # Analisis Historico DuraGas
-                  **Periodo:** Ultimos 6 meses
-
-                  Monitoreo de consumo, precios y costos de gas LP a lo largo del tiempo.
+                  Monitoreo de consumo, precios y costos de gas LP.
               - type: button
                 name: Volver
                 icon: mdi:arrow-left
@@ -409,6 +407,12 @@ views:
                 tap_action:
                   action: navigate
                   navigation_path: duragas
+
+          # Period Selector
+          - type: entities
+            entities:
+              - entity: select.duragas_tank_monitor_analytics_period
+                name: Periodo de graficas
 
           # Current Status Summary
           - type: horizontal-stack
@@ -430,50 +434,193 @@ views:
                 name: Ahorro vs Cilindros
                 icon: mdi:compare-horizontal
 
-          # Monthly Consumption Trend
-          - type: history-graph
-            title: Consumo Mensual (L/mes)
-            entities:
-              - entity: sensor.duragas_tank_monitor_monthly_consumption
-                name: Litros/mes
-            hours_to_show: 4320
-            refresh_interval: 3600
+          # ===========================================
+          # CONDITIONAL GRAPHS - 3 MONTHS
+          # ===========================================
+          - type: conditional
+            conditions:
+              - condition: state
+                entity: select.duragas_tank_monitor_analytics_period
+                state: "3_months"
+            card:
+              type: vertical-stack
+              cards:
+                - type: history-graph
+                  title: Consumo Mensual - 3 meses (L/mes)
+                  entities:
+                    - entity: sensor.duragas_tank_monitor_monthly_consumption
+                      name: Litros/mes
+                  hours_to_show: 2160
+                  refresh_interval: 3600
+                - type: history-graph
+                  title: Precio del Gas LP - 3 meses (MXN/L)
+                  entities:
+                    - entity: sensor.duragas_tank_monitor_gas_price_history
+                      name: Precio por Litro
+                  hours_to_show: 2160
+                  refresh_interval: 3600
+                - type: history-graph
+                  title: Gasto Mensual - 3 meses (MXN/mes)
+                  entities:
+                    - entity: sensor.duragas_tank_monitor_monthly_cost
+                      name: Costo Mensual
+                  hours_to_show: 2160
+                  refresh_interval: 3600
+                - type: history-graph
+                  title: Nivel del Tanque - 3 meses (%)
+                  entities:
+                    - entity: sensor.duragas_tank_monitor_tank_level
+                      name: Nivel
+                  hours_to_show: 2160
+                  refresh_interval: 3600
+                - type: history-graph
+                  title: Ahorro vs Cilindros - 3 meses (MXN/mes)
+                  entities:
+                    - entity: sensor.duragas_tank_monitor_savings_vs_cylinders
+                      name: Ahorro Mensual
+                  hours_to_show: 2160
+                  refresh_interval: 3600
 
-          # Price History
-          - type: history-graph
-            title: Precio del Gas LP (MXN/L)
-            entities:
-              - entity: sensor.duragas_tank_monitor_gas_price_history
-                name: Precio por Litro
-            hours_to_show: 4320
-            refresh_interval: 3600
+          # ===========================================
+          # CONDITIONAL GRAPHS - 6 MONTHS
+          # ===========================================
+          - type: conditional
+            conditions:
+              - condition: state
+                entity: select.duragas_tank_monitor_analytics_period
+                state: "6_months"
+            card:
+              type: vertical-stack
+              cards:
+                - type: history-graph
+                  title: Consumo Mensual - 6 meses (L/mes)
+                  entities:
+                    - entity: sensor.duragas_tank_monitor_monthly_consumption
+                      name: Litros/mes
+                  hours_to_show: 4320
+                  refresh_interval: 3600
+                - type: history-graph
+                  title: Precio del Gas LP - 6 meses (MXN/L)
+                  entities:
+                    - entity: sensor.duragas_tank_monitor_gas_price_history
+                      name: Precio por Litro
+                  hours_to_show: 4320
+                  refresh_interval: 3600
+                - type: history-graph
+                  title: Gasto Mensual - 6 meses (MXN/mes)
+                  entities:
+                    - entity: sensor.duragas_tank_monitor_monthly_cost
+                      name: Costo Mensual
+                  hours_to_show: 4320
+                  refresh_interval: 3600
+                - type: history-graph
+                  title: Nivel del Tanque - 6 meses (%)
+                  entities:
+                    - entity: sensor.duragas_tank_monitor_tank_level
+                      name: Nivel
+                  hours_to_show: 4320
+                  refresh_interval: 3600
+                - type: history-graph
+                  title: Ahorro vs Cilindros - 6 meses (MXN/mes)
+                  entities:
+                    - entity: sensor.duragas_tank_monitor_savings_vs_cylinders
+                      name: Ahorro Mensual
+                  hours_to_show: 4320
+                  refresh_interval: 3600
 
-          # Monthly Cost
-          - type: history-graph
-            title: Gasto Mensual (MXN/mes)
-            entities:
-              - entity: sensor.duragas_tank_monitor_monthly_cost
-                name: Costo Mensual
-            hours_to_show: 4320
-            refresh_interval: 3600
+          # ===========================================
+          # CONDITIONAL GRAPHS - 9 MONTHS
+          # ===========================================
+          - type: conditional
+            conditions:
+              - condition: state
+                entity: select.duragas_tank_monitor_analytics_period
+                state: "9_months"
+            card:
+              type: vertical-stack
+              cards:
+                - type: history-graph
+                  title: Consumo Mensual - 9 meses (L/mes)
+                  entities:
+                    - entity: sensor.duragas_tank_monitor_monthly_consumption
+                      name: Litros/mes
+                  hours_to_show: 6480
+                  refresh_interval: 3600
+                - type: history-graph
+                  title: Precio del Gas LP - 9 meses (MXN/L)
+                  entities:
+                    - entity: sensor.duragas_tank_monitor_gas_price_history
+                      name: Precio por Litro
+                  hours_to_show: 6480
+                  refresh_interval: 3600
+                - type: history-graph
+                  title: Gasto Mensual - 9 meses (MXN/mes)
+                  entities:
+                    - entity: sensor.duragas_tank_monitor_monthly_cost
+                      name: Costo Mensual
+                  hours_to_show: 6480
+                  refresh_interval: 3600
+                - type: history-graph
+                  title: Nivel del Tanque - 9 meses (%)
+                  entities:
+                    - entity: sensor.duragas_tank_monitor_tank_level
+                      name: Nivel
+                  hours_to_show: 6480
+                  refresh_interval: 3600
+                - type: history-graph
+                  title: Ahorro vs Cilindros - 9 meses (MXN/mes)
+                  entities:
+                    - entity: sensor.duragas_tank_monitor_savings_vs_cylinders
+                      name: Ahorro Mensual
+                  hours_to_show: 6480
+                  refresh_interval: 3600
 
-          # Tank Level History
-          - type: history-graph
-            title: Nivel del Tanque (%)
-            entities:
-              - entity: sensor.duragas_tank_monitor_tank_level
-                name: Nivel
-            hours_to_show: 4320
-            refresh_interval: 3600
-
-          # Savings vs Cylinders
-          - type: history-graph
-            title: Ahorro vs Cilindros (MXN/mes)
-            entities:
-              - entity: sensor.duragas_tank_monitor_savings_vs_cylinders
-                name: Ahorro Mensual
-            hours_to_show: 4320
-            refresh_interval: 3600
+          # ===========================================
+          # CONDITIONAL GRAPHS - 12 MONTHS
+          # ===========================================
+          - type: conditional
+            conditions:
+              - condition: state
+                entity: select.duragas_tank_monitor_analytics_period
+                state: "12_months"
+            card:
+              type: vertical-stack
+              cards:
+                - type: history-graph
+                  title: Consumo Mensual - 12 meses (L/mes)
+                  entities:
+                    - entity: sensor.duragas_tank_monitor_monthly_consumption
+                      name: Litros/mes
+                  hours_to_show: 8760
+                  refresh_interval: 3600
+                - type: history-graph
+                  title: Precio del Gas LP - 12 meses (MXN/L)
+                  entities:
+                    - entity: sensor.duragas_tank_monitor_gas_price_history
+                      name: Precio por Litro
+                  hours_to_show: 8760
+                  refresh_interval: 3600
+                - type: history-graph
+                  title: Gasto Mensual - 12 meses (MXN/mes)
+                  entities:
+                    - entity: sensor.duragas_tank_monitor_monthly_cost
+                      name: Costo Mensual
+                  hours_to_show: 8760
+                  refresh_interval: 3600
+                - type: history-graph
+                  title: Nivel del Tanque - 12 meses (%)
+                  entities:
+                    - entity: sensor.duragas_tank_monitor_tank_level
+                      name: Nivel
+                  hours_to_show: 8760
+                  refresh_interval: 3600
+                - type: history-graph
+                  title: Ahorro vs Cilindros - 12 meses (MXN/mes)
+                  entities:
+                    - entity: sensor.duragas_tank_monitor_savings_vs_cylinders
+                      name: Ahorro Mensual
+                  hours_to_show: 8760
+                  refresh_interval: 3600
 
           # Statistics Summary (90 days)
           - type: statistics-graph

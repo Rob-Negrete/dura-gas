@@ -105,3 +105,23 @@ class HeatingMode(StrEnum):
     SOLAR_ONLY = "solar_only"
     GAS_ONLY = "gas_only"
     NONE = "none"
+
+
+class AnalyticsPeriod(StrEnum):
+    """Analytics period options for historical graphs."""
+
+    MONTHS_3 = "3_months"
+    MONTHS_6 = "6_months"
+    MONTHS_9 = "9_months"
+    MONTHS_12 = "12_months"
+
+
+# Analytics period to hours mapping
+ANALYTICS_PERIOD_HOURS: Final[dict[str, int]] = {
+    AnalyticsPeriod.MONTHS_3: 2160,   # 90 days * 24 hours
+    AnalyticsPeriod.MONTHS_6: 4320,   # 180 days * 24 hours
+    AnalyticsPeriod.MONTHS_9: 6480,   # 270 days * 24 hours
+    AnalyticsPeriod.MONTHS_12: 8760,  # 365 days * 24 hours
+}
+
+DEFAULT_ANALYTICS_PERIOD: Final = AnalyticsPeriod.MONTHS_3
